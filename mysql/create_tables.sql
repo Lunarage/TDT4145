@@ -1,0 +1,108 @@
+CREATE TABLE Serier IF NOT EXISTS
+(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    tittel VARCHAR(200)
+);
+
+CREATE TABLE Personer IF NOT EXISTS
+(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    navn VARCHAR(100),
+    bursdag DATE,
+    land VARCHAR(100)
+);
+
+CREATE TABLE Selskaper IF NOT EXISTS
+(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    navn VARCHAR(200),
+    adresse VARCHAR(200),
+    land VARCHAR(100),
+    nettside VARCHAR(100)
+);
+
+CREATE TABLE Titler IF NOT EXISTS
+(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    tittel VARCHAR(200),
+    lanseringsdato DATE,
+    laget_for ENUM(NULL, 'kino', 'tv', 'streaming', 'video')
+    lengde INT, -- minutter
+    beskrivelse TEXT,
+    utgiver_id INT REFERENCES Selskaper ON UPDATE CASCADE ON DELETE SET NULL
+);
+
+CREATE TABLE Brukere IF NOT EXISTS
+(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    brukernavn VARCHAR(50),
+    epost VARCHAR(100),
+    bursdag DATE,
+    land VARCHAR(100)
+);
+
+CREATE TABLE Kategorier IF NOT EXISTS
+(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    navn VARCHAR(30),
+    beskrivelse TEXT
+);
+
+CREATE TABLE Roller IF NOT EXISTS 
+(
+    tittel_id INTEGER REFERENCES Titler ON UPDATE CASCADE ON DELETE CASCADE,
+    skuespiller_id INTEGER REFERENCES Personer ON UPDATE CASCADE ON DELETE CASCADE,
+    rollenavn VARCHAR(40),
+    CONSTRAINT roller_pk PRIMARY KEY (tittel_id, skuespiller_id, rollenavn)
+);
+
+CREATE TABLE Anmeldelser IF NOT EXISTS
+(
+    bruker_id INTEGER REFERENCES Brukere ON UPDATE CASCADE ON DELETE CASCADE,
+    tittel_id INTEGER REFERENCES Titler ON UPDATE CASCADE ON DELETE CASCADE,
+    rating INTEGER CHECK rating >= 0 AND rating <= 10,
+    tekst TEXT,
+    CONSTRAINT anmeldelser_pk PRIMARY KEY (bruker_id, tittel_id)
+);
+
+CREATE TABLE Episoder IF NOT EXISTS
+(
+    serie_id INTEGER REFERENCES Serier ON UPDATE CASCADE ON DELETE CASCADE,
+    episode_id INTEGER REFERENCES Titler ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT episoder_pk PRIMARY KEY (serie_id, episode_id)
+);
+
+CREATE TABLE Regissorer IF NOT EXISTS
+(
+    regissor_id INTEGER REFERENCES Personer ON UPDATE CASCADE ON DELETE CASCADE,
+    tittel_id INTEGER REFERENCES Titler ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT regissorer_pk PRIMARY KEY (regissor_id, tittel_id)
+);
+
+CREATE TABLE Manusforfattere IF NOT EXISTS
+(
+    forfatter_id INTEGER REFERENCES Personer ON UPDATE CASCADE ON DELETE CASCADE,
+    tittel_id INTEGER REFERENCES Titler ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT manusforfattere_pk PRIMARY KEY (forfatter_id, tittel_id)
+);
+
+CREATE TABLE Musikere IF NOT EXISTS
+(
+    musiker_id INTEGER REFERENCES Personer ON UPDATE CASCADE ON DELETE CASCADE,
+    tittel_id INTEGER REFERENCES Titler ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT musikere_pk PRIMARY KEY (musiker_id, tittel_id)
+);
+
+CREATE TABLE Komponister IF NOT EXISTS
+(
+    komponist_id INTEGER REFERENCES Personer ON UPDATE CASCADE ON DELETE CASCADE,
+    tittel_id INTEGER REFERENCES Titler ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT komponister_pk PRIMARY KEY (komponist_id, tittel_id)
+);
+
+CREATE TABLE Tittel_i_kategori IF NOT EXISTS
+(
+    tittel_id INTEGER REFERENCES Titler ON UPDATE CASCADE ON DELETE CASCADE,
+    kategori_id INTEGER REFERENCES Kategorier ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT tittel_i_kategori_pk PRIMARY KEY (tittel_id, kategori_id)
+)
