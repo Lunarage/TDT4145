@@ -2,8 +2,13 @@
  * Class used to test database connection.
  * @author Magne Halvorsen
 */
+import java.util.List;
+//More on lists:
+//https://www.javatpoint.com/java-arraylist
+import java.util.Properties;
 import java.sql.*;
-import java.util.*;
+//More on JDBC
+//https://www.javatpoint.com/java-jdbc
 
 public class Main {
     //TODO: Input for å velge databaseparametere
@@ -16,7 +21,10 @@ public class Main {
         PizzaTest test = new PizzaTest();
         test.connect("mariadb","localhost","3306","pizzaDB",p);
 
-        test.getPizza();
+        List<List<String>> list = test.getPizza();
+
+        TabellGenerator tabell = new TabellGenerator(list);
+        tabell.printTabell();
     }
 }
 

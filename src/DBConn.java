@@ -3,8 +3,10 @@
  * @author Magne Halvorsen
 */
 
+import java.util.Properties;
 import java.sql.*;
-import java.util.*;
+//More on JDBC
+//https://www.javatpoint.com/java-jdbc
 
 public abstract class DBConn{
     protected Connection conn;
