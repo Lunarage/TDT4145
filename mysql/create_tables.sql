@@ -1,10 +1,26 @@
-CREATE TABLE IF NOT EXISTS Serier 
+DROP TABLE Tittel_i_kategori;
+DROP TABLE Komponister;
+DROP TABLE Musikere;
+DROP TABLE Manusforfattere;
+DROP TABLE Regissorer;
+DROP TABLE Episoder;
+DROP TABLE Anmeldelser;
+DROP TABLE Roller;
+DROP TABLE Kategorier;
+DROP TABLE Brukere;
+DROP TABLE Titler;
+DROP TABLE Selskaper;
+DROP TABLE Personer;
+DROP TABLE Serier;
+
+
+CREATE TABLE IF NOT EXISTS Serier
 (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     tittel VARCHAR(200)
 );
 
-CREATE TABLE IF NOT EXISTS Personer 
+CREATE TABLE IF NOT EXISTS Personer
 (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     navn VARCHAR(100),
@@ -12,7 +28,7 @@ CREATE TABLE IF NOT EXISTS Personer
     land VARCHAR(100)
 );
 
-CREATE TABLE IF NOT EXISTS Selskaper 
+CREATE TABLE IF NOT EXISTS Selskaper
 (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     navn VARCHAR(200),
@@ -21,19 +37,19 @@ CREATE TABLE IF NOT EXISTS Selskaper
     nettside VARCHAR(100)
 );
 
-CREATE TABLE IF NOT EXISTS Titler 
+CREATE TABLE IF NOT EXISTS Titler
 (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     tittel VARCHAR(200),
     lanseringsdato DATE,
     laget_for VARCHAR(50),
     lengde INTEGER, -- minutter
-    beskrivelse VARCHAR(500),
+    beskrivelse TEXT,
     utgiver_id INTEGER,
     CONSTRAINT titler_utgiver_fk FOREIGN KEY (utgiver_id) REFERENCES Selskaper(id) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
-CREATE TABLE IF NOT EXISTS Brukere 
+CREATE TABLE IF NOT EXISTS Brukere
 (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     brukernavn VARCHAR(50),
@@ -42,14 +58,14 @@ CREATE TABLE IF NOT EXISTS Brukere
     land VARCHAR(100)
 );
 
-CREATE TABLE IF NOT EXISTS Kategorier 
+CREATE TABLE IF NOT EXISTS Kategorier
 (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     navn VARCHAR(30),
     beskrivelse TEXT
 );
 
-CREATE TABLE IF NOT EXISTS Roller  
+CREATE TABLE IF NOT EXISTS Roller
 (
     tittel_id INTEGER,
     skuespiller_id INTEGER REFERENCES Personer ON UPDATE CASCADE ON DELETE CASCADE,
@@ -59,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Roller
     CONSTRAINT roller_skuespiller_fk FOREIGN KEY (skuespiller_id) REFERENCES Personer(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Anmeldelser 
+CREATE TABLE IF NOT EXISTS Anmeldelser
 (
     bruker_id INTEGER,
     tittel_id INTEGER,
@@ -71,7 +87,7 @@ CREATE TABLE IF NOT EXISTS Anmeldelser
     CONSTRAINT rating_ok CHECK ((rating) >= 0 AND (rating) <= 10)
 );
 
-CREATE TABLE IF NOT EXISTS Episoder 
+CREATE TABLE IF NOT EXISTS Episoder
 (
     serie_id INTEGER,
     episode_id INTEGER,
@@ -80,7 +96,7 @@ CREATE TABLE IF NOT EXISTS Episoder
     CONSTRAINT episoder_episode_fk FOREIGN KEY (episode_id) REFERENCES Titler(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Regissorer 
+CREATE TABLE IF NOT EXISTS Regissorer
 (
     regissor_id INTEGER,
     tittel_id INTEGER,
@@ -89,7 +105,7 @@ CREATE TABLE IF NOT EXISTS Regissorer
     CONSTRAINT regissorer_tittel_fk FOREIGN KEY (tittel_id) REFERENCES Titler(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Manusforfattere 
+CREATE TABLE IF NOT EXISTS Manusforfattere
 (
     forfatter_id INTEGER,
     tittel_id INTEGER,
@@ -98,7 +114,7 @@ CREATE TABLE IF NOT EXISTS Manusforfattere
     CONSTRAINT manusforfattere_tittel_fk FOREIGN KEY (tittel_id) REFERENCES Titler(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Musikere 
+CREATE TABLE IF NOT EXISTS Musikere
 (
     musiker_id INTEGER REFERENCES Personer,
     tittel_id INTEGER REFERENCES Titler,
@@ -107,7 +123,7 @@ CREATE TABLE IF NOT EXISTS Musikere
     CONSTRAINT musikere_tittel_fk FOREIGN KEY (tittel_id) REFERENCES Titler(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Komponister 
+CREATE TABLE IF NOT EXISTS Komponister
 (
     komponist_id INTEGER REFERENCES Personer,
     tittel_id INTEGER REFERENCES Titler,
@@ -116,7 +132,7 @@ CREATE TABLE IF NOT EXISTS Komponister
     CONSTRAINT komponister_tittel_fk FOREIGN KEY (tittel_id) REFERENCES Titler(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Tittel_i_kategori 
+CREATE TABLE IF NOT EXISTS Tittel_i_kategori
 (
     tittel_id INTEGER REFERENCES Titler,
     kategori_id INTEGER REFERENCES Kategorier,
