@@ -42,7 +42,7 @@ public void printTabell(){
         }
         System.out.printf("|%n");
     }
-
+    System.out.printf("%n");
 }
 
 }

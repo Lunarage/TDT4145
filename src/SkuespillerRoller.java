@@ -1,6 +1,6 @@
 /*
  * Class Description
- * @author 
+ * @author Magne Halvorsen
 */
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,13 @@ public List<List<String>> hentRoller(String skuespiller){
     List<List<String>> roller = new ArrayList<List<String>>();
 
     try{
-        String query = "SELECT tittel, rollenavn FROM Roller as r JOIN Personer as p ON r.skuespiller_id = p.id JOIN Titler as t ON r.tittel_id = t.id WHERE r.skuespiller_id = ?"; //Insert Query here
+        //Java does not support raw strings aka one string over multiple lines.
+        //The solution for long strings is to concatenate strings.
+        String query = "SELECT tittel, rollenavn "
+            + "FROM Roller as r "
+            + "JOIN Personer as p ON r.skuespiller_id = p.id "
+            + "JOIN Titler as t ON r.tittel_id = t.id "
+            + "WHERE r.skuespiller_id = ?";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1, skuespiller);
         ResultSet rs = statement.executeQuery();

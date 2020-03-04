@@ -1,6 +1,6 @@
 /*
  * Class Description
- * @author 
+ * @author Magne Halvorsen
 */
 import java.util.ArrayList;
 import java.util.List;
@@ -12,20 +12,21 @@ import java.sql.*;
 
 public class SjangerFilmselskap extends DBConn{
 
-    public List<List<String>> hentSelskaper(){
+public List<List<String>> hentSelskaper(){
 
-        List<List<String>> selskaper = new ArrayList<List<String>>();
+    List<List<String>> selskaper = new ArrayList<List<String>>();
 
-        try{
-            String query = ""; //Insert Query here
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-            while(rs.next()){
-            /* Put results in List here */
-            }
-        }catch(SQLException e){
-            throw new RuntimeException("SQLError: ", e);
+    try{
+        String query = "";
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        while(rs.next()){
+        /* Put results in List here */
         }
-        return selskaper;
+    }catch(SQLException e){
+        throw new RuntimeException("SQLError: ", e);
     }
+    return selskaper;
+}
+
 }

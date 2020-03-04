@@ -66,6 +66,13 @@ public static void main(String[] args){
     List<List<String>> list = test.hentRoller("2");
     TabellGenerator tabell = new TabellGenerator(list);
     tabell.printTabell();
+
+    SkuespillerFilmer test2 = new SkuespillerFilmer();
+    test2.connect(type, host, port, database ,p);
+
+    List<List<String>> list2 = test2.hentFilmer("2");
+    TabellGenerator tabell2 = new TabellGenerator(list2);
+    tabell2.printTabell();
 }
 
 }
