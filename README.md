@@ -11,7 +11,7 @@ Databasen er implementert med MySQL.
 
 ## Konseptuell Modell
 Databasen er basert på følgende ER-diagram:
-![ER-diagram](https://github.com/jakobsen/internet-movie-datdatbase/img/Filmdatabase_ER.png)
+![ER-diagram](img/Filmdatabase_ER.png)
 
 # Dokumentasjon Program
 Programmet er skrevet i java og skal bruke JDBC for å snakke med databaser.
