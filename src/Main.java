@@ -58,21 +58,48 @@ public static void setupDatabaseParameters(){
 }
 
 public static void main(String[] args){
-
     setupDatabaseParameters();
-    SkuespillerRoller test = new SkuespillerRoller();
-    test.connect(type, host, port, database ,p);
 
-    List<List<String>> list = test.hentRoller("2");
-    TabellGenerator tabell = new TabellGenerator(list);
-    tabell.printTabell();
+    Scanner sc = new Scanner(System.in); //System.in is standard input stream
+    while(true){
+        clearScreen();
+        System.out.println("hentRoller");
+        System.out.println("hentTitler");
+        System.out.println("exit");
+        System.out.print("Valg: ");
+        String command = sc.nextLine();
+        switch(command){
+            case "hentRoller":
+                ListEntities idForRoller = new ListEntities("Skuespillere");
+                idForRoller.connect(type, host, port, database ,p);
+                int rolleChoice = idForRoller.findId();
 
-    SkuespillerFilmer test2 = new SkuespillerFilmer();
-    test2.connect(type, host, port, database ,p);
+                HentData hentRoller = new HentData();
+                hentRoller.connect(type, host, port, database ,p);
+                List<List<String>> roller = hentRoller.hentRoller(rolleChoice);
 
-    List<List<String>> list2 = test2.hentFilmer("2");
-    TabellGenerator tabell2 = new TabellGenerator(list2);
-    tabell2.printTabell();
+                TabellGenerator rolleTabell = new TabellGenerator(roller);
+                rolleTabell.printTabell();
+                sc.nextLine();
+            break;
+            case "hentTitler":
+                ListEntities idForTitler = new ListEntities("Skuespillere");
+                idForTitler.connect(type, host, port, database ,p);
+                int tittelChoice = idForTitler.findId();
+
+                HentData hentTitler = new HentData();
+                hentTitler.connect(type, host, port, database ,p);
+                List<List<String>> titler = hentTitler.hentFilmer(tittelChoice);
+
+                TabellGenerator tittelTabell = new TabellGenerator(titler);
+                tittelTabell.printTabell();
+                sc.nextLine();
+            break;
+            case "exit":
+                return;
+            default:
+        }
+    }
 }
 
 }
