@@ -13,6 +13,7 @@ public abstract class DBConn{
 protected Connection conn;
 protected String url;
 protected Properties p;
+protected PreparedStatement statement;
 
 public DBConn(){
 }

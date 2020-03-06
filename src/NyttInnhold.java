@@ -14,7 +14,8 @@ public class NyttInnhold extends DBConn{
 
 private String query;
 
-public void settInn(String tabell, List<String> verdier) throws SQLException{
+public void settInn(String tabell, List<String> verdier)
+        throws SQLException{
     switch(tabell){
         case "Selskap":
             query = "INSERT INTO Selskaper "
@@ -70,13 +71,18 @@ public void settInn(String tabell, List<String> verdier) throws SQLException{
         default:
             query = "";
     }
+    //Har vi en spørring?
     if(!query.isEmpty()){
-        PreparedStatement statement = conn.prepareStatement(query);
+        statement = conn.prepareStatement(query);
         ParameterMetaData meta = statement.getParameterMetaData();
+        //Er antall parametere til spørringen likt antall parametere gitt?
+        //aka antall '?' lik lengen på listen 'verdier'
         if(meta.getParameterCount() == verdier.size()){
+            //Sett parameterne til spørringen fra verdiene gitt.
             for(Integer i = 0; i < verdier.size(); i++){
                 statement.setString(i+1, verdier.get(i));
             }
+            //Kjør spørringen
             statement.executeUpdate();
         }else{
             System.out.println("Mismatch antall parametere");

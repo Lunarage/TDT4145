@@ -4,6 +4,7 @@
 */
 import java.util.Scanner;
 //Scanner for input from user
+import java.util.ArrayList;
 import java.util.List;
 //More on lists:
 //https://www.javatpoint.com/java-arraylist
@@ -63,42 +64,48 @@ public static void main(String[] args){
     Scanner sc = new Scanner(System.in); //System.in is standard input stream
     while(true){
         clearScreen();
-        System.out.println("hentRoller");
-        System.out.println("hentTitler");
-        System.out.println("exit");
+        System.out.println("0 Avslutt");
+        System.out.println("1 Hent Roller");
+        System.out.println("2 Sett inn nytt innhold");
         System.out.print("Valg: ");
         String command = sc.nextLine();
         switch(command){
-            case "hentRoller":
+            case "1":
+                ArrayList<String> henteVerdier = new ArrayList<String>();
                 ListEntities idForRoller = new ListEntities("Skuespillere");
                 idForRoller.connect(type, host, port, database ,p);
-                int rolleChoice = idForRoller.findId();
+                henteVerdier.add(idForRoller.findId());
 
                 HentData hentRoller = new HentData();
                 hentRoller.connect(type, host, port, database ,p);
-                List<List<String>> roller = hentRoller.hentRoller(rolleChoice);
-
-                TabellGenerator rolleTabell = new TabellGenerator(roller);
-                rolleTabell.printTabell();
-                sc.nextLine();
+                try{
+                List<List<String>> roller =
+                    hentRoller.hentData("SkuespillerRoller",henteVerdier);
+                    TabellGenerator rolleTabell = new TabellGenerator(roller);
+                    rolleTabell.printTabell();
+                }catch(SQLException e){
+                    throw new RuntimeException("SQLError: ", e);
+                }
             break;
-            case "hentTitler":
-                ListEntities idForTitler = new ListEntities("Skuespillere");
-                idForTitler.connect(type, host, port, database ,p);
-                int tittelChoice = idForTitler.findId();
+            case "2":
+                NyttInnhold nytt = new NyttInnhold();
+                nytt.connect(type, host, port, database ,p);
 
-                HentData hentTitler = new HentData();
-                hentTitler.connect(type, host, port, database ,p);
-                List<List<String>> titler = hentTitler.hentFilmer(tittelChoice);
-
-                TabellGenerator tittelTabell = new TabellGenerator(titler);
-                tittelTabell.printTabell();
-                sc.nextLine();
+                ArrayList<String> verdier = new ArrayList<String>(2);
+                verdier.add("Test");
+                verdier.add("Beskrivelse");
+                try{
+                    nytt.settInn("Kategori", verdier);
+                }catch(SQLException e){
+                    throw new RuntimeException("SQLError: ", e);
+                }
             break;
-            case "exit":
+            case "0":
                 return;
             default:
+                System.out.println("Ugyldig valg");
         }
+        sc.nextLine(); //Venter med å gå til start
     }
 }
 

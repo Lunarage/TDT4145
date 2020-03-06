@@ -41,7 +41,7 @@ public ListEntities(String table){
     }
 }
 
-public int findId(){
+public String findId(){
     Scanner sc = new Scanner(System.in); //System.in is standard input stream
     System.out.print("Search String: ");
     String searchString = sc.nextLine();
@@ -57,7 +57,7 @@ public int findId(){
         throw new RuntimeException("SQLError: ", e);
     }
     System.out.print("Velg id: ");
-    return sc.nextInt();
+    return sc.nextLine();
 }
 
 }
