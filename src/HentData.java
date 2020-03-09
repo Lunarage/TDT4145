@@ -64,6 +64,16 @@ public List<List<String>> hentData(String tabell, List<String> verdier)
                   // Subqueries must have an alias when used like this
                   + "GROUP BY Kategori";
         break;
+        case "Serier":
+            query = "SELECT t.tittel AS Episode, s.tittel AS Serie, e.sesong, e.episodenummer "
+                + "FROM Titler AS t "
+                + "INNER JOIN Episoder AS e "
+                + "ON t.id = e.episode_id "
+                + "INNER JOIN Serier AS s "
+                + "ON s.id = e.serie_id "
+                + "WHERE s.id = ? "
+                + "ORDER BY e.sesong, e.episodenummer";
+            break;
         default:
             query = "";
     }
