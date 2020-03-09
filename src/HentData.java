@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 //More on lists:
 //https://www.javatpoint.com/java-arraylist
+import java.util.Properties;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 //More on ResultSet
@@ -23,8 +24,14 @@ public class HentData extends DBConn{
 private String query;
 private List<List<String>> returnList = new ArrayList<List<String>>();
 
+public HentData(String type, String host, String port,
+        String database, Properties p){
+    super(type,host,port,database,p);
+}
+
 public List<List<String>> hentData(String tabell, List<String> verdier)
         throws SQLException{
+        returnList.clear();
     switch(tabell){
         case "SkuespillerTitler":
             query = "SELECT DISTINCT(tittel) AS Titler "
@@ -40,15 +47,29 @@ public List<List<String>> hentData(String tabell, List<String> verdier)
                   + "JOIN Titler as t ON r.tittel_id = t.id "
                   + "WHERE r.skuespiller_id = ?";
         break;
-        case "":
-            query = "";
+        case "SelskapSjanger":
+            query = "SELECT MAX(Antall) AS Antall, Kategori, Selskap "
+                  + "FROM ("
+                  //Subquery
+                  + "SELECT COUNT(t.tittel) AS Antall, "
+                  + "k.navn AS Kategori, "
+                  + "s.navn AS Selskap "
+                  + "FROM Tittel_i_kategori AS tik "
+                  + "JOIN Kategorier AS k ON tik.kategori_id = k.id "
+                  + "JOIN Titler AS t ON tik.tittel_id = t.id "
+                  + "JOIN Selskaper AS s ON t.utgiver_id = s.id "
+                  + "GROUP BY Kategori, Selskap "
+                  + "ORDER BY s.navn "
+                  + ") AS foo "
+                  // Subqueries must have an alias when used like this
+                  + "GROUP BY Kategori";
         break;
         default:
             query = "";
     }
 
     //Har vi en spørring?
-    if(!query.isEmpty()){        
+    if(!query.isEmpty()){
         statement = conn.prepareStatement(query);
         ParameterMetaData meta = statement.getParameterMetaData();
 

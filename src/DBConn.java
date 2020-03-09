@@ -15,10 +15,9 @@ protected String url;
 protected Properties p;
 protected PreparedStatement statement;
 
-public DBConn(){
-}
-
-public void connect(String type, String host, String port, String database, Properties p){
+public DBConn(
+        String type, String host, String port,
+        String database, Properties p){
     //type: {mariadb, mysql} should default to mysql
     //host: should default to localhost
     //port: should default to 3306

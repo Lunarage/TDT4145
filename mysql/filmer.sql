@@ -1,14 +1,30 @@
 INSERT INTO Personer (id, navn, bursdag, land)
 VALUES
-(1, 'Christopher Nolan', '1970-07-30', 'England'),
-(2, 'Leonardo DiCaprio','1974-11-11','USA'),
-(3, 'Joseph Gordon-Levitt','1981-02-17','USA'),
-(4, 'Ellen Page','1987-02-21','Canada'),
-(5, 'Hans Zimmer','1957-09-12','Tyskland'),
-(6, 'Emily Mortimer', '1971-12-01', 'England'),
-(7, 'Mark Ruffalo', '1967-11-22', 'USA'),
-(8, 'Martin Scorsese', '1942-11-17', 'USA'),
-(9, 'Laeta Kalogridis', '1965-08-30', 'USA')
+( 1, 'Christopher Nolan', '1970-07-30', 'England'),
+( 2, 'Leonardo DiCaprio','1974-11-11','USA'),
+( 3, 'Joseph Gordon-Levitt','1981-02-17','USA'),
+( 4, 'Ellen Page','1987-02-21','Canada'),
+( 5, 'Hans Zimmer','1957-09-12','Tyskland'),
+( 6, 'Emily Mortimer', '1971-12-01', 'England'),
+( 7, 'Mark Ruffalo', '1967-11-22', 'USA'),
+( 8, 'Martin Scorsese', '1942-11-17', 'USA'),
+( 9, 'Laeta Kalogridis', '1965-08-30', 'USA'),
+(10, 'Jonathan Nolan', '1976-06-06', 'England'),
+(11, 'Christian Bale', '1974-01-30', 'Wales'),
+(12, 'Heath Ledger', '1979-04-04', 'Australia'),
+(13, 'Aaron Eckhart', '1968-03-12', 'USA'),
+(14, 'James Newton Howard', '1951-06-09', 'USA'),
+(15, 'Quentin Tarantino', '1963-03-27', 'USA'),
+(16, 'Roger Avary', '1965-08-23', 'Canada'),
+(17, 'John Travolta', '1954-02-18', 'USA'),
+(18, 'Uma Thurman', '1970-04-29', 'USA'),
+(19, 'Samuel L. Jackson', '1948-12-21', 'USA'),
+(20, 'Ethan Coen', '1957-09-21', 'USA'),
+(21, 'Joel Coen', '1954-11-29', 'USA'),
+(22, 'Tommy Lee Jones', '1946-09-15', 'USA'),
+(23, 'Javier Bardem', '1969-03-01', 'Spania'),
+(24, 'Josh Brolin', '1968-02-12', 'USA'),
+(25, 'Carter Burwell', '1954-11-18', 'USA')
 ;
 
 INSERT INTO Kategorier (id, navn, beskrivelse)
@@ -17,13 +33,16 @@ VALUES
 (2, 'Adventure','Yes'),
 (3, 'Sci-Fi','Yes'),
 (4, 'Thriller','Yes'),
-(5, 'Mystery','Yes')
+(5, 'Mystery','Yes'),
+(6, 'Crime','Yes'),
+(7, 'Drama','Yes')
 ;
 
 INSERT INTO Selskaper (id, navn, adresse, land, nettside)
 VALUES
 (1, 'Warner Bros.','3400 Warner Blvd, Burbank, CA 91505','USA','www.warnerbros.com/'),
-(2, 'Paramount Pictures','5555 Melrose Avenue, Hollywood, California','USA','www.paramount.com/')
+(2, 'Paramount Pictures','5555 Melrose Avenue, Hollywood, California','USA','www.paramount.com/'),
+(3, 'Miramax','Los Angeles, California','USA','www.miramax.com')
 ;
 
 INSERT INTO Titler (id, tittel, lanseringsdato, laget_for, lengde, beskrivelse, utgiver_id)
@@ -33,7 +52,16 @@ VALUES
     1),
 (2, 'Shutter Island','2010-02-19','Kino',138,
     'In 1954, up-and-coming U.S. marshal Teddy Daniels is assigned to investigate the disappearance of a patient from Boston''s Shutter Island Ashecliffe Hospital. He''s been pushing for an assignment on the island for personal reasons, but before long he thinks he''s been brought there as part of a twisted plot by hospital doctors whose radical treatments range from unethical to illegal to downright sinister. Teddy''s shrewd investigating skills soon provide a promising lead, but the hospital refuses him access to records he suspects would break the case wide open. As a hurricane cuts off communication with the mainland, more dangerous criminals "escape" in the confusion, and the puzzling, improbable clues multiply, Teddy begins to doubt everything - his memory, his partner, even his own sanity.',
-    2)
+    2),
+(3, 'The Dark Knight','2008-07-18','Kino',152,
+    'Set within a year after the events of Batman Begins (2005), Batman, Lieutenant James Gordon, and new District Attorney Harvey Dent successfully begin to round up the criminals that plague Gotham City, until a mysterious and sadistic criminal mastermind known only as "The Joker" appears in Gotham, creating a new wave of chaos. Batman''s struggle against The Joker becomes deeply personal, forcing him to "confront everything he believes" and improve his technology to stop him. A love triangle develops between Bruce Wayne, Dent, and Rachel Dawes.',
+    1),
+(4, 'Pulp Fiction','1994-10-04','Kino',154,
+    'Jules Winnfield (Samuel L. Jackson) and Vincent Vega (John Travolta) are two hit men who are out to retrieve a suitcase stolen from their employer, mob boss Marsellus Wallace (Ving Rhames). Wallace has also asked Vincent to take his wife Mia (Uma Thurman) out a few days later when Wallace himself will be out of town. Butch Coolidge (Bruce Willis) is an aging boxer who is paid by Wallace to lose his fight. The lives of these seemingly unrelated people are woven together comprising of a series of funny, bizarre and uncalled-for incidents.',
+    3),
+(5, 'No Country for Old Men','2007-11-21','Kino',122,
+    'In rural Texas, welder and hunter Llewelyn Moss (Josh Brolin) discovers the remains of several drug runners who have all killed each other in an exchange gone violently wrong. Rather than report the discovery to the police, Moss decides to simply take the two million dollars present for himself. This puts the psychopathic killer, Anton Chigurh (Javier Bardem), on his trail as he dispassionately murders nearly every rival, bystander and even employer in his pursuit of his quarry and the money. As Moss desperately attempts to keep one step ahead, the blood from this hunt begins to flow behind him with relentlessly growing intensity as Chigurh closes in. Meanwhile, the laconic Sheriff Ed Tom Bell (Tommy Lee Jones) blithely oversees the investigation even as he struggles to face the sheer enormity of the crimes he is attempting to thwart.',
+    3)
 ;
 
 INSERT INTO Roller (tittel_id, skuespiller_id, rollenavn)
@@ -43,31 +71,61 @@ VALUES
 (1,4,'Ariadne'),
 (2,2,'Teddy Daniels'),
 (2,6,'Rachel 1'),
-(2,7,'Chuck Aule')
+(2,7,'Chuck Aule'),
+(3,11,'Bruce Wayne'),
+(3,12,'Joker'),
+(3,13,'Harvey Dent'),
+(4,17,'Vincent Vega'),
+(4,18,'Mia Wallace'),
+(4,19,'Jules Winnfield'),
+(5,22,'Ed Tom Bell'),
+(5,23,'Anton Chigurh'),
+(5,24,'24Llewelyn Moss')
 ;
 
 INSERT INTO Komponister (komponist_id, tittel_id)
 VALUES
-(5,1)
+(5,1),
+(5,3),
+(14,3),
+(25,5)
 ;
 
 INSERT INTO Regissorer (regissor_id, tittel_id)
 VALUES
 (1,1),
-(8,2)
+(8,2),
+(1,3),
+(15,4),
+(20,5),
+(21,5)
 ;
 
 INSERT INTO Manusforfattere (forfatter_id, tittel_id)
 VALUES
 (1,1),
-(9,2)
+(9,2),
+(1,3),
+(10,3),
+(15,4),
+(16,4),
+(20,5),
+(21,5)
 ;
 
 INSERT INTO Tittel_i_kategori (tittel_id, kategori_id)
 VALUES
+(1,1),
 (1,2),
 (1,3),
-(1,4),
 (2,4),
-(2,5)
+(2,5),
+(3,1),
+(3,6),
+(3,7),
+(4,6),
+(4,7),
+(5,6),
+(5,7),
+(5,4)
 ;

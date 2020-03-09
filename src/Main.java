@@ -22,6 +22,10 @@ public static String database;
 public static String user;
 public static String password;
 public static Properties p = new Properties();
+public static HentData hd;
+public static NyttInnhold ni;
+public static ListEntities li;
+public static Scanner sc;
 
 public static void clearScreen() {
     System.out.print("\033[H\033[2J");
@@ -58,55 +62,156 @@ public static void setupDatabaseParameters(){
     clearScreen();
 }
 
+public static void mainMenu(){
+    while(true){
+    clearScreen();
+    System.out.println("0 Avslutt");
+    System.out.println("1 Hent data");
+    System.out.println("2 Sett inn nytt innhold");
+    System.out.print("Valg: ");
+    String command = sc.nextLine();
+    switch(command){
+        case "1":
+            henteMenu();
+        break;
+        case "2":
+            nyttMenu();
+        break;
+        case "0":
+            return;
+        default:
+            System.out.println("Ugyldig valg");
+            sc.nextLine(); //Venter med å gå til start
+    }
+    }
+}
+
+public static void henteMenu(){
+    ArrayList<String> henteVerdier = new ArrayList<String>();
+    TabellGenerator tg = new TabellGenerator();
+
+    while(true){
+    clearScreen();
+    String tabell = "";
+    henteVerdier.clear();
+    System.out.println("0 Tilbake");
+    System.out.println("1 Finne roller for en skuespiller");
+    System.out.println("2 Finn filmer/serier en skuespiller har spilt i");
+    System.out.println("3 Liste over fleste filmer/serier per selskap");
+    System.out.print("Valg: ");
+    String command = sc.nextLine();
+    switch(command){
+        case "1":
+            tabell = "SkuespillerRoller";
+            System.out.println("Søk etter skuespiller");
+            henteVerdier.add(li.findId("Skuespillere"));
+        break;
+        case "2":
+            tabell = "SkuespillerTitler";
+            System.out.println("Søk etter skuespiller");
+            henteVerdier.add(li.findId("Skuespillere"));
+        break;
+        case "3":
+            tabell = "SelskapSjanger";
+        break;
+        case "0":
+            return;
+        default:
+            System.out.println("Ugyldig valg");
+    }
+    if(!tabell.isEmpty()){
+        try{
+            tg.printTabell(hd.hentData(tabell, henteVerdier));
+        }catch(SQLException e){
+            throw new RuntimeException("SQLError: ", e);
+        }
+    }
+    sc.nextLine(); //Venter med å gå til start
+    }
+}
+
+public static void nyttMenu(){
+    ArrayList<String> nyeVerdier = new ArrayList<String>();
+
+    while(true){
+    clearScreen();
+    nyeVerdier.clear();
+    String tabell = "";
+    System.out.println("0 Tilbake");
+    System.out.println("1 Ny person");
+    System.out.println("2 Nytt selskap");
+    System.out.println("3 Ny serie");
+    System.out.println("4 Ny sjanger");
+    System.out.println("5 Ny rolle");
+    System.out.print("Valg: ");
+    String command = sc.nextLine();
+    switch(command){
+        case "1":
+            tabell = "Person";
+            System.out.print("Navn: ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Bursdag (YYYY-MM-DD): ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Land: ");
+            nyeVerdier.add(sc.nextLine());
+        break;
+        case "2":
+            tabell = "Selskap";
+            System.out.print("Navn: ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Adresse: ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Land: ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Nettside: ");
+            nyeVerdier.add(sc.nextLine());
+        break;
+        case "3":
+            tabell = "Serie";
+            System.out.print("Tittel: ");
+            nyeVerdier.add(sc.nextLine());
+        break;
+        case "4":
+            tabell = "Kategori";
+            System.out.print("Navn: ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Beskrivelse: ");
+            nyeVerdier.add(sc.nextLine());
+        break;
+        case "5":
+            tabell = "Rolle";
+            System.out.println("Velg film/episode");
+            nyeVerdier.add(li.findId("Titler"));
+            System.out.println("Velg person");
+            nyeVerdier.add(li.findId("Personer"));
+            System.out.print("Rollenavn: ");
+            nyeVerdier.add(sc.nextLine());
+        break;
+        case "0":
+            return;
+        default:
+            System.out.println("Ugyldig valg");
+    }
+    if(!tabell.isEmpty()){
+        try{
+            ni.settInn(tabell, nyeVerdier);
+            System.out.println("Success!");
+        }catch(SQLException e){
+            throw new RuntimeException("SQLError: ", e);
+        }
+    }
+    sc.nextLine(); //Venter med å gå til start
+    }
+}
+
 public static void main(String[] args){
     setupDatabaseParameters();
 
-    Scanner sc = new Scanner(System.in); //System.in is standard input stream
-    while(true){
-        clearScreen();
-        System.out.println("0 Avslutt");
-        System.out.println("1 Hent Roller");
-        System.out.println("2 Sett inn nytt innhold");
-        System.out.print("Valg: ");
-        String command = sc.nextLine();
-        switch(command){
-            case "1":
-                ArrayList<String> henteVerdier = new ArrayList<String>();
-                ListEntities idForRoller = new ListEntities("Skuespillere");
-                idForRoller.connect(type, host, port, database ,p);
-                henteVerdier.add(idForRoller.findId());
-
-                HentData hentRoller = new HentData();
-                hentRoller.connect(type, host, port, database ,p);
-                try{
-                List<List<String>> roller =
-                    hentRoller.hentData("SkuespillerRoller",henteVerdier);
-                    TabellGenerator rolleTabell = new TabellGenerator(roller);
-                    rolleTabell.printTabell();
-                }catch(SQLException e){
-                    throw new RuntimeException("SQLError: ", e);
-                }
-            break;
-            case "2":
-                NyttInnhold nytt = new NyttInnhold();
-                nytt.connect(type, host, port, database ,p);
-
-                ArrayList<String> verdier = new ArrayList<String>(2);
-                verdier.add("Test");
-                verdier.add("Beskrivelse");
-                try{
-                    nytt.settInn("Kategori", verdier);
-                }catch(SQLException e){
-                    throw new RuntimeException("SQLError: ", e);
-                }
-            break;
-            case "0":
-                return;
-            default:
-                System.out.println("Ugyldig valg");
-        }
-        sc.nextLine(); //Venter med å gå til start
-    }
+    hd = new HentData(type, host, port, database ,p);
+    ni = new NyttInnhold(type, host, port, database ,p);
+    li = new ListEntities(type, host, port, database ,p);
+    sc = new Scanner(System.in); //System.in is standard input stream
+    mainMenu();
 }
 
 }

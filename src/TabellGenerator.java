@@ -15,7 +15,7 @@ private List<Integer> widthList;
 private Integer columns;
 private Integer rows;
 
-public TabellGenerator(List<List<String>> inputList){
+public void printTabell(List<List<String>> inputList){
     list = inputList;
     rows = list.size();
     columns = list.get(0).size();//Assuming all rows are of equal size
@@ -30,19 +30,30 @@ public TabellGenerator(List<List<String>> inputList){
             }
         }
     }
-}
 
-public void printTabell(){
     //More about printf:
     //https://www.baeldung.com/java-printstream-printf
     for(Integer i = 0; i < rows; i++){
+        if(i == 0 || i == 1){
+            System.out.print("+");
+            for(Integer j = 0; j < columns; j++){
+                System.out.print("-".repeat(widthList.get(j)+2) + "+");
+            }
+            System.out.printf("%n");
+        }
         for(Integer j = 0; j < columns; j++){
             String field = list.get(i).get(j);
             System.out.printf("| %-"+widthList.get(j)+"s ", field);
         }
         System.out.printf("|%n");
+        if(i == rows - 1){
+            System.out.print("+");
+            for(Integer j = 0; j < columns; j++){
+                System.out.print("-".repeat(widthList.get(j)+2) + "+");
+            }
+            System.out.printf("%n");
+        }
     }
-    System.out.printf("%n");
 }
 
 }

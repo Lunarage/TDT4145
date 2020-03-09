@@ -6,6 +6,7 @@
 import java.util.List;
 //More on lists:
 //https://www.javatpoint.com/java-arraylist
+import java.util.Properties;
 import java.sql.*;
 //More on JDBC
 //https://www.javatpoint.com/java-jdbc
@@ -13,6 +14,11 @@ import java.sql.*;
 public class NyttInnhold extends DBConn{
 
 private String query;
+
+public NyttInnhold(String type, String host, String port,
+        String database, Properties p){
+    super(type,host,port,database,p);
+}
 
 public void settInn(String tabell, List<String> verdier)
         throws SQLException{

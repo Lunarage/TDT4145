@@ -2,8 +2,10 @@
  * Class Description
  * @author Magne Halvorsen
 */
+
 import java.util.Scanner;
 //Scanner for input from user
+import java.util.Properties;
 import java.sql.*;
 //More on JDBC
 //https://www.javatpoint.com/java-jdbc
@@ -12,7 +14,12 @@ public class ListEntities extends DBConn{
 
 private String query;
 
-public ListEntities(String table){
+public ListEntities(String type, String host, String port,
+        String database, Properties p){
+    super(type,host,port,database,p);
+}
+
+public String findId(String table){
     //COLLATE utf8mb4_unicode_ci = Case insensitive search
     //Side note: PostgreSQL har operasjonen ILIKE som gjør det samme
     switch(table){
@@ -39,9 +46,6 @@ public ListEntities(String table){
     default:
         break;
     }
-}
-
-public String findId(){
     Scanner sc = new Scanner(System.in); //System.in is standard input stream
     System.out.print("Search String: ");
     String searchString = sc.nextLine();
