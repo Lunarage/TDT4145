@@ -102,11 +102,14 @@ CREATE TABLE IF NOT EXISTS Episoder
 (
     serie_id INTEGER,
     episode_id INTEGER,
+    sesong INTEGER,
+    episodenummer INTEGER,
     PRIMARY KEY (serie_id, episode_id),
     CONSTRAINT epsioder_serie_fk FOREIGN KEY (serie_id)
     REFERENCES Serier(id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT episoder_episode_fk FOREIGN KEY (episode_id)
-    REFERENCES Titler(id) ON UPDATE CASCADE ON DELETE CASCADE
+    REFERENCES Titler(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT unique_episode UNIQUE (serie_id, sesong, episodenummer)
 );
 
 CREATE TABLE IF NOT EXISTS Regissorer
