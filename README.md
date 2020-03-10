@@ -31,6 +31,13 @@ Programmet er basert på følgende klassediagram:
 
 ![Class Diagram](img/Class_Diagram.png)
 
+Et sequence diagram av hvordan programmet finner hvilke roller en skuespiller
+har hatt:
+
+![Sequence Diagram](img/Sequence_Roller.png)
+
+Use case 1, 2 og 3 løses på denne måten.
+
 ## Klasser
 
 ### Main
@@ -186,7 +193,7 @@ Oppretter en tilkobling til databasen.
 
 ##### findId
 ```java
-public int findId()
+public int findId(String table)
 ```
 Lister opp innhold i en forhåndsdefinert tabell/spørring og lar brukeren velge en id.
 
