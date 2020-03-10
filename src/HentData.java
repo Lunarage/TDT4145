@@ -1,8 +1,3 @@
-/*
- * Class Description
- * @author Magne Halvorsen
-*/
-
 import java.util.List;
 import java.util.ArrayList;
 //More on lists:
@@ -18,20 +13,34 @@ import java.sql.ParameterMetaData;
 import java.sql.ResultSetMetaData;
 //More on ResultSetMetaData
 //https://docs.oracle.com/javase/7/docs/api/java/sql/ResultSetMetaData.html
+import java.sql.PreparedStatement;
 
+/*
+ * Class Description
+ * @author Magne Halvorsen
+ * {@inheritDoc}
+*/
 public class HentData extends DBConn{
 
-private String query;
-private List<List<String>> returnList = new ArrayList<List<String>>();
-
+/**
+ * {@inheritDoc}
+ */
 public HentData(String type, String host, String port,
         String database, Properties p){
     super(type,host,port,database,p);
 }
 
+/**
+ * Sends SELECT queries to the database.
+ *
+ * @param   tabell    What case to use.
+ * @param   verdier   Values to put in the query.
+ * @return  A 2-dimentional List with name of the columns in the first row.
+ * @throws  SQLException On SQL error.
+ */
 public List<List<String>> hentData(String tabell, List<String> verdier)
         throws SQLException{
-        returnList.clear();
+    String query = "";
     switch(tabell){
         case "SkuespillerTitler":
             query = "SELECT DISTINCT(tittel) AS Titler "
@@ -65,12 +74,13 @@ public List<List<String>> hentData(String tabell, List<String> verdier)
                   + "GROUP BY Kategori";
         break;
         default:
-            query = "";
     }
+    //Opprett listen som skal returneres
+    List<List<String>> returnList = new ArrayList<List<String>>();
 
     //Har vi en spørring?
     if(!query.isEmpty()){
-        statement = conn.prepareStatement(query);
+        PreparedStatement statement = conn.prepareStatement(query);
         ParameterMetaData meta = statement.getParameterMetaData();
 
         //Er antall parametere til spørringen likt antall parametere gitt?
@@ -80,6 +90,7 @@ public List<List<String>> hentData(String tabell, List<String> verdier)
             for(Integer i = 0; i < verdier.size(); i++){
                 statement.setString(i+1, verdier.get(i));
             }
+
 
             //Kjør spørringen og putt resultatet i rs
             ResultSet rs = statement.executeQuery();

@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"<Unnamed>","l":"DBConn"},{"p":"<Unnamed>","l":"HentData"},{"p":"<Unnamed>","l":"ListEntities"},{"p":"<Unnamed>","l":"Main"},{"p":"<Unnamed>","l":"NyttInnhold"},{"p":"<Unnamed>","l":"TabellGenerator"}]

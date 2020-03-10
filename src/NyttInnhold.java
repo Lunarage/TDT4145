@@ -1,8 +1,3 @@
-/*
- * Class Description
- * @author Magne Halvorsen
-*/
-
 import java.util.List;
 //More on lists:
 //https://www.javatpoint.com/java-arraylist
@@ -11,17 +6,31 @@ import java.sql.*;
 //More on JDBC
 //https://www.javatpoint.com/java-jdbc
 
+/*
+ * Class Description
+ * @author Magne Halvorsen
+ * {@inheritDoc}
+*/
 public class NyttInnhold extends DBConn{
 
-private String query;
-
+/**
+ * {@inheritDoc}
+ */
 public NyttInnhold(String type, String host, String port,
         String database, Properties p){
     super(type,host,port,database,p);
 }
 
+/**
+ * Sends INSERT queries to the database.
+ *
+ * @param   tabell    What case to use.
+ * @param   verdier   Values to put in the query.
+ * @throws  SQLException On SQL error.
+ */
 public void settInn(String tabell, List<String> verdier)
         throws SQLException{
+    String query = "";
     switch(tabell){
         case "Selskap":
             query = "INSERT INTO Selskaper "
@@ -75,11 +84,11 @@ public void settInn(String tabell, List<String> verdier)
                   + "VALUES (?, ?, ?, ?, ?, ?)";
         break;
         default:
-            query = "";
     }
+
     //Har vi en spørring?
     if(!query.isEmpty()){
-        statement = conn.prepareStatement(query);
+        PreparedStatement statement = conn.prepareStatement(query);
         ParameterMetaData meta = statement.getParameterMetaData();
         //Er antall parametere til spørringen likt antall parametere gitt?
         //aka antall '?' lik lengen på listen 'verdier'

@@ -1,7 +1,3 @@
-/*
- * Class used to test database connection.
- * @author Magne Halvorsen
-*/
 import java.util.Scanner;
 //Scanner for input from user
 import java.util.ArrayList;
@@ -13,6 +9,10 @@ import java.sql.*;
 //More on JDBC
 //https://www.javatpoint.com/java-jdbc
 
+/*
+ * Has only static methods and properties.
+ * @author Magne Halvorsen
+*/
 public class Main {
 
 public static String type;

@@ -1,8 +1,3 @@
-/*
- * Class Description
- * @author Magne Halvorsen
-*/
-
 import java.util.Scanner;
 //Scanner for input from user
 import java.util.Properties;
@@ -10,18 +5,29 @@ import java.sql.*;
 //More on JDBC
 //https://www.javatpoint.com/java-jdbc
 
+/**
+ * Contains a method to list rows for the database and lets the user choose an id.
+ * @author Magne Halvorsen
+*/
 public class ListEntities extends DBConn{
 
-private String query;
-
+/**
+ * {@inheritDoc}
+ */
 public ListEntities(String type, String host, String port,
         String database, Properties p){
     super(type,host,port,database,p);
 }
 
+/**
+ * Lists rows from the database and lets the user choose an id.
+ * @param table What query/case to use.
+ * @return String with choice.
+ */
 public String findId(String table){
     //COLLATE utf8mb4_unicode_ci = Case insensitive search
     //Side note: PostgreSQL har operasjonen ILIKE som gjør det samme
+    String query = "";
     switch(table){
     case "Personer":
         query = "SELECT id, navn AS field "
@@ -44,7 +50,6 @@ public String findId(String table){
             + "ORDER BY id";
         break;
     default:
-        break;
     }
     Scanner sc = new Scanner(System.in); //System.in is standard input stream
     System.out.print("Search String: ");
