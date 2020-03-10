@@ -98,6 +98,7 @@ public static void henteMenu(){
     System.out.println("1 Finne roller for en skuespiller");
     System.out.println("2 Finn filmer/serier en skuespiller har spilt i");
     System.out.println("3 Liste over fleste filmer/serier per selskap");
+    System.out.println("4 Liste over episoder i en serie");
     System.out.print("Valg: ");
     String command = sc.nextLine();
     switch(command){
@@ -114,6 +115,11 @@ public static void henteMenu(){
         case "3":
             tabell = "SelskapSjanger";
         break;
+        case "4":
+            tabell = "Serier";
+            System.out.println("Søk etter serie");
+            henteVerdier.add(li.findId("Serier"));
+            break;
         case "0":
             return;
         default:

@@ -49,6 +49,12 @@ public String findId(String table){
             + "WHERE tittel LIKE ? COLLATE utf8mb4_unicode_ci "
             + "ORDER BY id";
         break;
+    case "Serier":
+        query = "SELECT id, tittel AS field "
+            + "FROM Serier "
+            + "WHERE tittel LIKE ? COLLATE utf8mb4_unicode_ci "
+            + "ORDER BY id";
+            break;
     default:
     }
     Scanner sc = new Scanner(System.in); //System.in is standard input stream
