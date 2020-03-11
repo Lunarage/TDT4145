@@ -38,6 +38,12 @@ har hatt:
 
 Use case 1, 2 og 3 løses på denne måten.
 
+Et sequence diagram som beskriver hvordan programmet setter inn ny data:
+
+![Sequence Diagram](img/Sequence_Anmeldelse.png)
+
+Use case 4 og 5 løses på dette viset.
+
 ## Klasser
 
 ### Main
