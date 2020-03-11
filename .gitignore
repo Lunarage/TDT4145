@@ -1,6 +1,9 @@
 src/*.class
+cls/*.class
 .syntastic_javac_config
 .DS_Store
 .idea/
 *.log
 *.jar
+*.odt
+manifest.txt

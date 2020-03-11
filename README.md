@@ -6,6 +6,10 @@ program.
 Databasen inneholder informasjon om filmer og serier à la IMDb og programmet
 leser og skriver til denne databasen.
 
+En kopi av databasen hostes på informal.ed.ntnu.no.
+
+![Connect](img/connect.png)
+
 # Dokumentasjon Database
 Databasen er implementert med MySQL.
 
@@ -15,7 +19,7 @@ Databasen er basert på følgende ER-diagram:
 ![ER-diagram av databasen](img/Filmdatabase_ER.png)
 
 # Dokumentasjon Program
-Programmet er skrevet i java og bruker JDBC for å snakke med databaser.
+Programmet er skrevet i java 11 og bruker JDBC for å snakke med databaser.
 
 Use cases som løses av programmet:
 1. Finne navnet på alle rollene en gitt skuespiller har.
