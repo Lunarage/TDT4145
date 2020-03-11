@@ -7,10 +7,12 @@ CLASSPATH = .:$(SRCDIR)/
 JARFILE = datdatbase.jar
 
 SOURCES := $(wildcard $(SRCDIR)/*.java)
-CLASSES := $(SOURCES:.java=.class)
+CLASSES := $(SOURCES:$(SRCDIR)/%.java=$(CLASSDIR)/%.class)
 
-%.class : %.java
+$(CLASSDIR)/%.class : $(SRCDIR)/%.java
 	$(JC) $(JFLAGS) -classpath $(CLASSPATH) -d $(CLASSDIR) $<
+
+all: $(CLASSES) doc jar
 
 default: $(CLASSES)
 
@@ -19,14 +21,15 @@ doc: $(CLASSES)
 
 jar: $(CLASSES)
 	@echo "Manifest-Version: 1.0" > manifest.txt
-	@echo "Class-path: /usr/share/java/mariadb-jdbc/mariadb-java-client.jar /usr/share/java/mysql-connector-java.jar" >> manifest.txt
+	@echo "Class-path: mysql-connector-java.jar mariadb-java-client.jar /usr/share/java/mariadb-jdbc/mariadb-java-client.jar /usr/share/java/mysql-connector-java.jar" >> manifest.txt
 	@echo "Main-Class: Main" >> manifest.txt
 	@echo "" >> manifest.txt
 	jar -v -c -m manifest.txt -f $(JARFILE) -C $(CLASSDIR) .
 
 clean:
-	$(RM) $(SRCDIR)/*.class
+	$(RM) $(CLASSDIR)/*.class
 	$(RM) manifest.txt
+	$(RM) $(JARFILE)
 
 run:
 	java Main
