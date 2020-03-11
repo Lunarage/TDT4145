@@ -89,7 +89,9 @@ public String findId(String table){
         System.out.println("SQLError: " + e.getMessage());
     }
     System.out.print("Velg id: ");
-    return sc.nextLine();
+    String returnId = sc.nextLine();
+    sc.close();
+    return returnId;
 }
 
 }

@@ -48,6 +48,17 @@ Et sequence diagram som beskriver hvordan programmet setter inn ny data:
 
 Use case 4 og 5 løses på dette viset.
 
+### Notater
+Parametere/Variabler med navn `table` referer ikke til en faktisk tabell i
+databasen, men en tabell generert av en spørring. Variabelen `table` blir
+oversatt til en spørring i en switch-case.
+
+Da vi ikke skal utføre noen utregninger i programmet, lagres og settes alle
+variabler/parametere som String. Alt av eventuel utregning overlates til
+databasen.
+
+De fleste klassene er basically Singletons.
+
 ## Klasser
 
 ### Main
@@ -208,7 +219,7 @@ public int findId(String table)
 Lister opp innhold i en forhåndsdefinert tabell/spørring og lar brukeren velge en id.
 
 **Parameters:**
-* table: Hvilken tabell i databasen man vil se på. {Personer, Skuespillere, Titler}
+* table: Hvilken tabell i databasen man vil se på.
 
 **Returns:**
   id til raden man vil ha

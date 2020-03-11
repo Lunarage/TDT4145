@@ -1,7 +1,6 @@
 import java.util.Scanner;
 //Scanner for input from user
 import java.util.ArrayList;
-import java.util.List;
 //More on lists:
 //https://www.javatpoint.com/java-arraylist
 import java.util.Properties;
@@ -27,7 +26,7 @@ public static ListEntities li;
 public static Scanner sc;
 
 /**
- * Clears the screen.
+ * Clears the screen. Does not work as expected in all IDEs.
  */
 public static void clearScreen() {
     System.out.print("\033[H\033[2J");
@@ -35,7 +34,6 @@ public static void clearScreen() {
 }
 
 public static void setupDatabaseParameters(){
-    Scanner sc = new Scanner(System.in); //System.in is standard input stream
     System.out.print("Type (default mysql): ");
     type = sc.nextLine();
     if(type.isEmpty()){
@@ -293,14 +291,15 @@ public static void nyttMenu(){
 }
 
 public static void main(String[] args){
+    sc = new Scanner(System.in); //System.in is standard input stream
     setupDatabaseParameters();
 
     hd = new HentData(type, host, port, database ,p);
     ni = new NyttInnhold(type, host, port, database ,p);
     li = new ListEntities(type, host, port, database ,p);
-    sc = new Scanner(System.in); //System.in is standard input stream
 
     mainMenu();
+    sc.close();
 }
 
 }
