@@ -9,9 +9,8 @@ import java.sql.*;
 //More on JDBC
 //https://www.javatpoint.com/java-jdbc
 
-/*
+/**
  * Has only static methods and properties.
- * @author Magne Halvorsen
 */
 public class Main {
 
@@ -27,6 +26,9 @@ public static NyttInnhold ni;
 public static ListEntities li;
 public static Scanner sc;
 
+/**
+ * Clears the screen.
+ */
 public static void clearScreen() {
     System.out.print("\033[H\033[2J");
     System.out.flush();
@@ -129,7 +131,7 @@ public static void henteMenu(){
         try{
             tg.printTabell(hd.hentData(tabell, henteVerdier));
         }catch(SQLException e){
-            throw new RuntimeException("SQLError: ", e);
+            System.out.println("SQLError: " + e.getMessage());
         }
     }
     sc.nextLine(); //Venter med å gå til start
@@ -149,6 +151,14 @@ public static void nyttMenu(){
     System.out.println("3 Ny serie");
     System.out.println("4 Ny sjanger");
     System.out.println("5 Ny rolle");
+    System.out.println("6 Ny regissør");
+    System.out.println("7 Ny manusforfatter");
+    System.out.println("8 Ny musiker");
+    System.out.println("9 Ny komponist");
+    System.out.println("10 Ny anmeldelse");
+    System.out.println("11 Ny film/episode");
+    System.out.println("12 Tilordne episode til serie");
+    System.out.println("13 Tilordne film/episode til kategori");
     System.out.print("Valg: ");
     String command = sc.nextLine();
     switch(command){
@@ -193,6 +203,78 @@ public static void nyttMenu(){
             System.out.print("Rollenavn: ");
             nyeVerdier.add(sc.nextLine());
         break;
+        case "6":
+            tabell = "Regissor";
+            System.out.println("Velg person");
+            nyeVerdier.add(li.findId("Personer"));
+            System.out.println("Velg film/episode");
+            nyeVerdier.add(li.findId("Titler"));
+        break;
+        case "7":
+            tabell = "Forfatter";
+            System.out.println("Velg person");
+            nyeVerdier.add(li.findId("Personer"));
+            System.out.println("Velg film/episode");
+            nyeVerdier.add(li.findId("Titler"));
+        break;
+        case "8":
+            tabell = "Musiker";
+            System.out.println("Velg person");
+            nyeVerdier.add(li.findId("Personer"));
+            System.out.println("Velg film/episode");
+            nyeVerdier.add(li.findId("Titler"));
+        break;
+        case "9":
+            tabell = "Komponist";
+            System.out.println("Velg person");
+            nyeVerdier.add(li.findId("Personer"));
+            System.out.println("Velg film/episode");
+            nyeVerdier.add(li.findId("Titler"));
+        break;
+        case "10":
+            tabell = "Anmeldelse";
+            System.out.println("Velg bruker");
+            nyeVerdier.add(li.findId("Brukere"));
+            System.out.println("Velg film/episode");
+            nyeVerdier.add(li.findId("Titler"));
+            System.out.print("Rating (1-10): ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Anmeldelse: ");
+            nyeVerdier.add(sc.nextLine());
+        break;
+        case "11":
+            tabell = "Tittel";
+            System.out.print("Tittel: ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Lanseringsdato (YYYY-MM-DD): ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Laget for: ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Lengde (minutter): ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Beskrivelse: ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.println("Velg utgivelsesselskap");
+            nyeVerdier.add(li.findId("Selskaper"));
+        break;
+        case "12":
+            tabell = "Episode";
+            System.out.println("Velg serie");
+            nyeVerdier.add(li.findId("Serier"));
+            System.out.println("Velg film/episode");
+            nyeVerdier.add(li.findId("Titler"));
+            System.out.print("Sesong: ");
+            nyeVerdier.add(sc.nextLine());
+            System.out.print("Episodenummer: ");
+            nyeVerdier.add(sc.nextLine());
+        break;
+        case "13":
+            tabell = "TittelIKategori";
+            System.out.println("Velg film/episode");
+            nyeVerdier.add(li.findId("Titler"));
+            System.out.println("Velg kategori");
+            nyeVerdier.add(li.findId("Kategorier"));
+        break;
         case "0":
             return;
         default:
@@ -203,7 +285,7 @@ public static void nyttMenu(){
             ni.settInn(tabell, nyeVerdier);
             System.out.println("Success!");
         }catch(SQLException e){
-            throw new RuntimeException("SQLError: ", e);
+            System.out.println("SQLError: " + e.getMessage());
         }
     }
     sc.nextLine(); //Venter med å gå til start
@@ -217,6 +299,7 @@ public static void main(String[] args){
     ni = new NyttInnhold(type, host, port, database ,p);
     li = new ListEntities(type, host, port, database ,p);
     sc = new Scanner(System.in); //System.in is standard input stream
+
     mainMenu();
 }
 

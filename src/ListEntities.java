@@ -6,8 +6,7 @@ import java.sql.*;
 //https://www.javatpoint.com/java-jdbc
 
 /**
- * Contains a method to list rows for the database and lets the user choose an id.
- * @author Magne Halvorsen
+ * Contains a method to list rows from the database and lets the user choose an id.
 */
 public class ListEntities extends DBConn{
 
@@ -43,6 +42,12 @@ public String findId(String table){
             + "WHERE p.navn LIKE ? COLLATE utf8mb4_unicode_ci "
             + "ORDER BY p.id";
         break;
+    case "Selskaper":
+        query = "SELECT id, navn AS field "
+            + "FROM Selskaper "
+            + "WHERE navn LIKE ? COLLATE utf8mb4_unicode_ci "
+            + "ORDER BY id";
+        break;
     case "Titler":
         query = "SELECT id, tittel AS field "
             + "FROM Titler "
@@ -53,6 +58,18 @@ public String findId(String table){
         query = "SELECT id, tittel AS field "
             + "FROM Serier "
             + "WHERE tittel LIKE ? COLLATE utf8mb4_unicode_ci "
+            + "ORDER BY id";
+            break;
+    case "Kategorier":
+        query = "SELECT id, navn AS field "
+            + "FROM Kategorier "
+            + "WHERE navn LIKE ? COLLATE utf8mb4_unicode_ci "
+            + "ORDER BY id";
+            break;
+    case "Brukere":
+        query = "SELECT id, brukernavn AS field "
+            + "FROM Brukere "
+            + "WHERE brukernavn LIKE ? COLLATE utf8mb4_unicode_ci "
             + "ORDER BY id";
             break;
     default:
@@ -69,7 +86,7 @@ public String findId(String table){
             System.out.printf("%s%n",rs.getString("field"));
         }
     }catch(SQLException e){
-        throw new RuntimeException("SQLError: ", e);
+        System.out.println("SQLError: " + e.getMessage());
     }
     System.out.print("Velg id: ");
     return sc.nextLine();

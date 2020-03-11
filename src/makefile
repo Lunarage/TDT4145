@@ -12,7 +12,7 @@ SRCS := $(wildcard *.java)
 default: $(SRCS:.java=.class)
 
 doc:
-	javadoc -version -author -d $(DOC) $(SRCS)
+	javadoc -d $(DOC) $(SRCS)
 
 clean:
 	$(RM) *.class

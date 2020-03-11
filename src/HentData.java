@@ -15,9 +15,8 @@ import java.sql.ResultSetMetaData;
 //https://docs.oracle.com/javase/7/docs/api/java/sql/ResultSetMetaData.html
 import java.sql.PreparedStatement;
 
-/*
- * Class Description
- * @author Magne Halvorsen
+/**
+ * Contains a method to send SELECT queries to the database.
  * {@inheritDoc}
 */
 public class HentData extends DBConn{

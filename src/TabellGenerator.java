@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * Holds a method to print out 2-dimensional lists as neat tables.
- * @author Magne Halvorsen
 */
 public class TabellGenerator{
 

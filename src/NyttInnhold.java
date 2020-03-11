@@ -6,9 +6,8 @@ import java.sql.*;
 //More on JDBC
 //https://www.javatpoint.com/java-jdbc
 
-/*
- * Class Description
- * @author Magne Halvorsen
+/**
+ * Contains a method to send INSERT queries to the database.
  * {@inheritDoc}
 */
 public class NyttInnhold extends DBConn{
@@ -42,11 +41,6 @@ public void settInn(String tabell, List<String> verdier)
                   + "(navn, bursdag, land) "
                   + "VALUES (?, ?, ?)";
         break;
-        case "Rolle":
-            query = "INSERT INTO Roller "
-                  + "(tittel_id, skuespiller_id, rollenavn) "
-                  + "VALUES (?, ?, ?)";
-        break;
         case "Serie":
             query = "INSERT INTO Serier "
                   + "(tittel) "
@@ -56,6 +50,11 @@ public void settInn(String tabell, List<String> verdier)
             query = "INSERT INTO Kategorier "
                   + "(navn, beskrivelse) "
                   + "VALUES (?, ?)";
+        break;
+        case "Rolle":
+            query = "INSERT INTO Roller "
+                  + "(tittel_id, skuespiller_id, rollenavn) "
+                  + "VALUES (?, ?, ?)";
         break;
         case "Regissor":
             query = "INSERT INTO Regissorer "
@@ -82,6 +81,21 @@ public void settInn(String tabell, List<String> verdier)
                   + "(tittel, lanseringsdato, laget_for,"
                   + " lengde, beskrivelse, utgiver_id) "
                   + "VALUES (?, ?, ?, ?, ?, ?)";
+        break;
+        case "Anmeldelse":
+            query = "INSERT INTO Anmeldelser "
+                  + "(bruker_id, tittel_id, rating, tekst) "
+                  + "VALUES (?, ?, ?, ?)";
+        break;
+        case "Episoder":
+            query = "INSERT INTO Episoder "
+                  + "(serie_id, episode_id, sesong, episodenummer) "
+                  + "VALUES (?, ?, ?, ?)";
+        break;
+        case "TittelIKategori":
+            query = "INSERT INTO Tittel_i_kategori "
+                  + "(tittel_id, kategori_id) "
+                  + "VALUES (?, ?)";
         break;
         default:
     }
