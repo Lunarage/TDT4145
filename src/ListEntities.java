@@ -90,7 +90,7 @@ public String findId(String table){
     }
     System.out.print("Velg id: ");
     String returnId = sc.nextLine();
-    sc.close();
+    // sc.close();
     return returnId;
 }
 

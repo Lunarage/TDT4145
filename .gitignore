@@ -7,3 +7,4 @@ cls/*.class
 *.jar
 *.odt
 manifest.txt
+/bin/
